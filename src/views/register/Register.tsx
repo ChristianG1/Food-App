@@ -1,17 +1,12 @@
 import React from 'react';
 import { 
   StyleSheet, Text, View, 
-  Image, TextInput, TouchableOpacity,
+  Image, TextInput,
   ToastAndroid 
 } from 'react-native';
 import { RoundedButton } from '../../components/RoundedButton';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../../App';
 
 export const RegisterScreen = () => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-
   return (
     <View style={styles.container}>
       <Image 
