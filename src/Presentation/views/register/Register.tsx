@@ -1,50 +1,75 @@
-import React, { useState } from 'react';
-import { View, Image, Text, StyleSheet, TextInput, ToastAndroid, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { 
+  StyleSheet, Text, View, 
+  Image, TextInput,
+  ToastAndroid 
+} from 'react-native';
 import { RoundedButton } from '../../components/RoundedButton';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../../App';
 
-export const HomeScreen = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  console.log('first');
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-
+export const RegisterScreen = () => {
   return (
     <View style={styles.container}>
       <Image 
-        source={require('../../../assets/chef.jpg')} 
+        source={require('../../../../assets/chef.jpg')} 
         style={styles.imageBackground} 
       />
       <View style={styles.logoContainer}>
         <Image 
-          source={require('../../../assets/logo.png')}
+          source={require('../../../../assets/user_image.png')}
           style={styles.logoImage}
          />
 
-        <Text style={styles.logoText}>FOOD APP</Text>
+        <Text style={styles.logoText}>SELECCIONA UNA IMAGEN</Text>
       </View>
       <View style={styles.form}>
-        <Text style={styles.formText}>Ingresar</Text>
+        <Text style={styles.formText}>REGISTRARSE</Text>
         <View style={styles.formInput}>
           <Image
-            source={require('../../../assets/email.png')}
+            source={require('../../../../assets/user.png')}
+            style={styles.formIcon}
+          />
+          <TextInput
+            placeholder='Nombre'
+            style={styles.formTextInput} 
+            keyboardType="default"
+          />
+        </View>
+        <View style={styles.formInput}>
+          <Image
+            source={require('../../../../assets/my_user.png')}
+            style={styles.formIcon}
+          />
+          <TextInput
+            placeholder='Apellidos'
+            style={styles.formTextInput} 
+            keyboardType="default"
+          />
+        </View>
+        <View style={styles.formInput}>
+          <Image
+            source={require('../../../../assets/email.png')}
             style={styles.formIcon}
           />
           <TextInput
             placeholder='Correo electrónico'
             style={styles.formTextInput} 
             keyboardType="email-address"
-            value={email}
-            onChangeText={ text => setEmail(text) }
           />
         </View>
-        
         <View style={styles.formInput}>
           <Image
-            source={require('../../../assets/password.png')}
+            source={require('../../../../assets/user.png')}
+            style={styles.formIcon}
+          />
+          <TextInput
+            placeholder='Telefono'
+            style={styles.formTextInput} 
+            keyboardType="numeric"
+          />
+        </View>
+        <View style={styles.formInput}>
+          <Image
+            source={require('../../../../assets/password.png')}
             style={styles.formIcon}
           />
           <TextInput
@@ -52,25 +77,23 @@ export const HomeScreen = () => {
             style={styles.formTextInput} 
             keyboardType="default"
             secureTextEntry={true}
-            value={password}
-            onChangeText={ text => setPassword(text) }
+          />
+        </View>
+        <View style={styles.formInput}>
+          <Image
+            source={require('../../../../assets/password.png')}
+            style={styles.formIcon}
+          />
+          <TextInput
+            placeholder='Confirmar contraseña'
+            style={styles.formTextInput} 
+            keyboardType="default"
+            secureTextEntry={true}
           />
         </View>
 
         <View style={{ marginTop: 30 }}> 
-          <RoundedButton
-            text='LOGIN'
-            onPress={ () => {
-              console.log(`Email: ${email} - Password: ${password}`);
-            }}
-          />
-        </View>
-
-        <View style={styles.formRegister}>
-          <Text>No tienes cuenta?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
-            <Text style={styles.formRegisterText}>Registrate</Text>
-          </TouchableOpacity>
+         <RoundedButton text='CONFIRMAR' onPress={() => ToastAndroid.show('Click', ToastAndroid.SHORT)} />
         </View>
       </View>
     </View>
@@ -90,7 +113,7 @@ const styles = StyleSheet.create({
   },
   form: {
     width: '100%',
-    height: '40%',
+    height: '70%',
     backgroundColor: 'white',
     position: 'absolute',
     bottom: 0,
@@ -134,7 +157,8 @@ const styles = StyleSheet.create({
   logoContainer: {
     position: 'absolute',
     alignSelf: 'center',
-    top: '15%',
+    top: '5%',
+    alignItems: 'center',
   },
   logoImage: {
     width: 100,
@@ -147,4 +171,4 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontWeight: 'bold',
   },
-});
+})
