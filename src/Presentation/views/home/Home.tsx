@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { View, Image, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, Image, Text, TouchableOpacity } from 'react-native';
 import { RoundedButton } from '../../components/RoundedButton';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../../App';
 import useViewModel from './ViewModel';
+import { CustomTextInput } from '../../components/CustomTextInput';
+import styles from './Styles';
 
 export const HomeScreen = () => {
   const { email, password, onChange } = useViewModel();
@@ -27,35 +29,23 @@ export const HomeScreen = () => {
       </View>
       <View style={styles.form}>
         <Text style={styles.formText}>Ingresar</Text>
-        <View style={styles.formInput}>
-          <Image
-            source={require('../../../../assets/email.png')}
-            style={styles.formIcon}
-          />
-          <TextInput
-            placeholder='Correo electrónico'
-            style={styles.formTextInput} 
-            keyboardType="email-address"
-            value={email}
-            onChangeText={ text => onChange('email', text) }
-          />
-        </View>
-        
-        <View style={styles.formInput}>
-          <Image
-            source={require('../../../../assets/password.png')}
-            style={styles.formIcon}
-          />
-          <TextInput
-            placeholder='Contraseña'
-            style={styles.formTextInput} 
-            keyboardType="default"
-            secureTextEntry={true}
-            value={password}
-            onChangeText={ text => onChange('password', text) }
-          />
-        </View>
-
+        <CustomTextInput
+          image={require('../../../../assets/email.png')}
+          placeholder='Correo electrónico'
+          keyboardType="email-address"
+          property='email'
+          onChangeText={ onChange }
+          value={ email }
+        />
+        <CustomTextInput
+          image={require('../../../../assets/password.png')}
+          placeholder="Contraseña"
+          keyboardType='default'
+          secureTextEntry={true}
+          value={password}
+          property="password"
+          onChangeText={ onChange }
+        /> 
         <View style={{ marginTop: 30 }}> 
           <RoundedButton
             text='LOGIN'
@@ -76,74 +66,3 @@ export const HomeScreen = () => {
   )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'black',
-  },
-  imageBackground: {
-    width: '100%',
-    height: '100%',
-    opacity: 0.7,
-    bottom: '30%'
-  },
-  form: {
-    width: '100%',
-    height: '40%',
-    backgroundColor: 'white',
-    position: 'absolute',
-    bottom: 0,
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
-    padding: 30,
-  },
-  formText: {
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-    fontSize: 16
-  },
-  formInput: {
-    flexDirection: 'row',
-    marginTop: 30,
-  },
-  formTextInput: {
-    flex: 1,
-    borderBottomWidth: 1,
-    borderBottomColor: '#AAAAAA',
-    marginLeft: 15,
-  },
-  formIcon: {
-    width: 25,
-    height: 25,
-    marginTop: 5,
-  },
-  formRegister: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 30,
-  },
-  formRegisterText: {
-    fontStyle: 'italic',
-    color: 'orange',
-    borderBottomWidth: 1,
-    borderBottomColor: 'orange',
-    fontWeight: 'bold',
-    marginLeft: 10,
-  },
-  logoContainer: {
-    position: 'absolute',
-    alignSelf: 'center',
-    top: '15%',
-  },
-  logoImage: {
-    width: 100,
-    height: 100,
-  },
-  logoText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 20,
-    marginTop: 10,
-    fontWeight: 'bold',
-  },
-});
