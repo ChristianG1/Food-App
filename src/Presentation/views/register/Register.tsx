@@ -52,7 +52,7 @@ export const RegisterScreen = () => {
           onChangeText={ onChange }
         />
         <CustomTextInput
-          image={require('../../../../assets/email.png')}
+          image={require('../../../../assets/phone.png')}
           placeholder="Teléfono"
           value={phone}
           keyboardType="numeric"
