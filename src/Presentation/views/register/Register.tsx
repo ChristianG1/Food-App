@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { 
   Text, View, 
   Image,
   ScrollView,
+  ToastAndroid,
+  Alert,
+  Platform
 } from 'react-native';
+
 import { CustomTextInput } from '../../components/CustomTextInput';
 import { RoundedButton } from '../../components/RoundedButton';
 import useViewModel from './ViewModel';
 import styles from './Styles';
 
 export const RegisterScreen = () => {
-  const { name, lastname, email, phone, password, confirmPassword, onChange, register } = useViewModel();
+  const { name, lastname, email, phone, password, confirmPassword, onChange, register, errorMessage } = useViewModel();
+
+  useEffect(() => {
+    if(errorMessage != '') {
+      Platform.OS === 'android' ? ToastAndroid.show(errorMessage, ToastAndroid.LONG) : Alert.alert('Información incorrecta', errorMessage) 
+    }
+  }, [errorMessage])
 
   return (
     <View style={styles.container}>
@@ -80,7 +90,7 @@ export const RegisterScreen = () => {
             onChangeText={ onChange }
           />
           <View style={{ marginTop: 30 }}> 
-          <RoundedButton text='CONFIRMAR' onPress={() => register()} />
+          <RoundedButton text='CONFIRMAR' onPress={() => {register()}} />
           </View>
         </ScrollView>
       </View>
