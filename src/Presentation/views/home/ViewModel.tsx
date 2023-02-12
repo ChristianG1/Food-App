@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { LoginAuthUseCase } from '../../../Domain/useCases/auth/LoginAuth';
 
 const HomeViewModel = () => {
+  const [errorMessage, setErrorMessage] = useState('');
   const [values, setValues] = useState({
     email: '',
     password: '',
@@ -10,9 +12,35 @@ const HomeViewModel = () => {
     setValues({ ...values, [property]: value })
   }
 
+  const login = async () => {
+    if(isValidForm()) {
+      const response = await LoginAuthUseCase(values.email, values.password);
+      console.log('RESPONSE: ' + JSON.stringify(response));
+
+      if(!response.success) {
+        setErrorMessage(response.message);
+      }
+    }
+  }
+
+  const isValidForm = (): boolean => {
+    if(values.email === '') {
+      setErrorMessage('Ingresa el correo electrónico');
+      return false;
+    }
+    if(values.password === '') {
+      setErrorMessage('Ingresa la contraseña');
+      return false;
+    }
+
+    return true;
+  }
+
   return {
     ...values,
-    onChange
+    onChange,
+    login,
+    errorMessage
   }
 }
 
