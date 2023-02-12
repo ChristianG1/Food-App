@@ -18,7 +18,7 @@ export const RegisterScreen = () => {
 
   useEffect(() => {
     if(errorMessage != '') {
-      Platform.OS === 'android' ? ToastAndroid.show(errorMessage, ToastAndroid.LONG) : Alert.alert('Información incorrecta', errorMessage) 
+      Platform.OS === 'android' ? ToastAndroid.show(errorMessage, ToastAndroid.LONG) : Alert.alert('Información incorrecta', errorMessage, ) 
     }
   }, [errorMessage])
 
