@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { User } from "../../Domain/entities/User";
-import { GetUserUseCase } from "../../Domain/useCases/userLocal/GetUser";
+import { GetUserLocalUseCase } from "../../Domain/useCases/userLocal/GetUserLocal";
 
 export const useUserLocal = () => {
   const [user, setUser] = useState<User>();
@@ -10,11 +10,12 @@ export const useUserLocal = () => {
   }, [])
 
   const getUserSession = async () => {
-    const user = await GetUserUseCase();
+    const user = await GetUserLocalUseCase();
     setUser(user);
   }
 
   return {
-    user
+    user,
+    getUserSession
   }
 }

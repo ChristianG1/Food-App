@@ -20,7 +20,7 @@ export const HomeScreen = ({ navigation, route }: Props) => {
 
   useEffect(() => {
     if(user?.id !== null && user?.id !== undefined) {
-      navigation.navigate('ProfileInfoScreen');
+      navigation.replace('ProfileInfoScreen');
     }
   }, [user])
 
