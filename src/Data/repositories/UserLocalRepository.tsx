@@ -16,4 +16,9 @@ export class UserLocalRepositoryImpl implements UserLocalRepository {
 
     return user;
   }
+
+  async remove(): Promise<void> {
+    const { remove } = LocalStorage();
+    await remove('user');
+  }
 }
