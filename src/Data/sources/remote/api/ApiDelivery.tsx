@@ -8,4 +8,12 @@ const ApiDelivery = axios.create({
   }
 })
 
-export { ApiDelivery };
+const ApiDeliveryForImage = axios.create({
+  baseURL: 'http://192.168.1.70:3000/api',
+  headers: {
+    'Content-Type': 'multipart/form-data',
+    'accept': 'application/json'
+  }
+})
+
+export { ApiDelivery, ApiDeliveryForImage };
