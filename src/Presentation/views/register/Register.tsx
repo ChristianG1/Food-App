@@ -13,15 +13,19 @@ import { CustomTextInput } from '../../components/CustomTextInput';
 import { RoundedButton } from '../../components/RoundedButton';
 import useViewModel from './ViewModel';
 import styles from './Styles';
+import { useState } from 'react';
+import { ModalPickImage } from '../../components/ModalPickImage';
 
 export const RegisterScreen = () => {
-  const { name, lastname, email, image, phone, password, confirmPassword, onChange, register, errorMessage, pickImage } = useViewModel();
+  const { name, lastname, email, image, phone, password, confirmPassword, onChange, register, errorMessage, pickImage, takePhoto } = useViewModel();
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   useEffect(() => {
     if(errorMessage != '') {
       Platform.OS === 'android' ? ToastAndroid.show(errorMessage, ToastAndroid.LONG) : Alert.alert('Información incorrecta', errorMessage, ) 
     }
   }, [errorMessage])
+
 
   return (
     <View style={styles.container}>
@@ -30,7 +34,7 @@ export const RegisterScreen = () => {
           style={styles.imageBackground} 
       />
       <View style={styles.logoContainer}>
-        <TouchableOpacity onPress={() => pickImage()}>
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
           {
             image === ''
             ? 
@@ -106,6 +110,12 @@ export const RegisterScreen = () => {
           </View>
         </ScrollView>
       </View>
+      <ModalPickImage
+        openGallery={ pickImage }
+        openCamera={ takePhoto }
+        modalUseState={ modalVisible }
+        setModalUseState={ setModalVisible }
+      />
     </View>
   )
 }

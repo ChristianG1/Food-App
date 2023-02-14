@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { RegisterAuthUseCase } from '../../../Domain/useCases/auth/RegisterAuth';
 import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
+
 
 const RegisterViewModel = () => {
+
   const [errorMessage, setErrorMessage] = useState('');
   const [file, setFile] = useState<ImagePicker.ImagePickerAsset>()
   const [values, setValues] = useState({
@@ -17,6 +20,26 @@ const RegisterViewModel = () => {
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true, 
+      quality: 1,
+    });
+
+    if(!result.canceled) {
+      onChange('image', result.assets[0].uri);
+      setFile(result.assets[0]);
+    }
+  }
+
+  const takePhoto = async () => {
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("You've refused to allow this appp to access your camera!");
+      return;
+    }
+
+    let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true, 
       quality: 1,
@@ -79,6 +102,7 @@ const RegisterViewModel = () => {
     register,
     pickImage,
     errorMessage,
+    takePhoto,
   }
 }
 
