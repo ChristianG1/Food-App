@@ -5,7 +5,8 @@ import {
   ScrollView,
   ToastAndroid,
   Alert,
-  Platform
+  Platform,
+  TouchableOpacity
 } from 'react-native';
 
 import { CustomTextInput } from '../../components/CustomTextInput';
@@ -14,7 +15,7 @@ import useViewModel from './ViewModel';
 import styles from './Styles';
 
 export const RegisterScreen = () => {
-  const { name, lastname, email, phone, password, confirmPassword, onChange, register, errorMessage } = useViewModel();
+  const { name, lastname, email, image, phone, password, confirmPassword, onChange, register, errorMessage, pickImage } = useViewModel();
 
   useEffect(() => {
     if(errorMessage != '') {
@@ -25,14 +26,25 @@ export const RegisterScreen = () => {
   return (
     <View style={styles.container}>
       <Image 
-        source={require('../../../../assets/chef.jpg')} 
-        style={styles.imageBackground} 
+          source={require('../../../../assets/chef.jpg')} 
+          style={styles.imageBackground} 
       />
       <View style={styles.logoContainer}>
-        <Image 
-          source={require('../../../../assets/user_image.png')}
-          style={styles.logoImage}
-         />
+        <TouchableOpacity onPress={() => pickImage()}>
+          {
+            image === ''
+            ? 
+              <Image
+                source={require('../../../../assets/user_image.png')}
+                style={styles.logoImage}
+              />
+            :
+              <Image
+                source={{ uri: image }}
+                style={styles.logoImage}
+              />
+          }
+        </TouchableOpacity>
 
         <Text style={styles.logoText}>SELECCIONA UNA IMAGEN</Text>
       </View>
