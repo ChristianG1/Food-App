@@ -6,7 +6,8 @@ import {
   ToastAndroid,
   Alert,
   Platform,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator
 } from 'react-native';
 
 import { CustomTextInput } from '../../components/CustomTextInput';
@@ -15,9 +16,14 @@ import useViewModel from './ViewModel';
 import styles from './Styles';
 import { useState } from 'react';
 import { ModalPickImage } from '../../components/ModalPickImage';
+import { StackScreenProps } from '@react-navigation/stack';
+import { RootStackParamList } from '../../../../App';
+import { MyColors } from '../../theme/AppTheme';
 
-export const RegisterScreen = () => {
-  const { name, lastname, email, image, phone, password, confirmPassword, onChange, register, errorMessage, pickImage, takePhoto } = useViewModel();
+interface Props extends StackScreenProps<RootStackParamList, 'RegisterScreen'>{};
+
+export const RegisterScreen = ({ navigation, route }: Props) => {
+  const { name, lastname, email, image, phone, password, confirmPassword, onChange, register, errorMessage, pickImage, takePhoto, user, loading } = useViewModel();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   useEffect(() => {
@@ -25,6 +31,12 @@ export const RegisterScreen = () => {
       Platform.OS === 'android' ? ToastAndroid.show(errorMessage, ToastAndroid.LONG) : Alert.alert('Información incorrecta', errorMessage, ) 
     }
   }, [errorMessage])
+
+  useEffect(() => {
+    if(user?.id !== null && user?.id !== undefined) {
+      navigation.replace('ProfileInfoScreen');
+    }
+  }, [user]);
 
 
   return (
@@ -110,12 +122,17 @@ export const RegisterScreen = () => {
           </View>
         </ScrollView>
       </View>
+
       <ModalPickImage
         openGallery={ pickImage }
         openCamera={ takePhoto }
         modalUseState={ modalVisible }
         setModalUseState={ setModalVisible }
       />
+
+      {
+        loading && <ActivityIndicator size="large" color={MyColors.primary} style={styles.loading} />
+      }
     </View>
   )
 }
